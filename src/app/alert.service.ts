@@ -1,6 +1,10 @@
 import { Injectable } from "@angular/core";
 
-Injectable({
+@Injectable({
     providedIn: 'root'
 })
-export class AlertService {}
+export class AlertService {
+    displayAlert(message: string): void {
+        alert(message);
+    }
+}

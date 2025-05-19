@@ -9,40 +9,57 @@ import { BaseFormComponent } from './base-form.component';
   providers: [
     {
       provide: BaseFormComponent,
-      useExisting: forwardRef(() => PortfolioComponent)
-    }
+      useExisting: forwardRef(() => PortfolioComponent),
+    },
   ],
   template: `
-    <div class="p-3 ">
-      <h1 class="fs-4">Portfolio</h1>
+    <div class="fade-in mt-3">
+      <h1 class="fs-5">Portfolio</h1>
       <form class="d-flex flex-column gap-2" [formGroup]="form">
-
         <div class="">
           <input
-            class="form-control"
+            class="form-control {{ getValidationClass('portfolioUrl') }}"
             formControlName="portfolioUrl"
             type="text"
             id="portfolioUrl"
             placeholder="portfolio link"
           />
-          <small></small>
+          @for (error of getErrors('portfolioUrl'); track error) {
+          <small class="py-1 text-danger">{{ error }}</small>
+          }
         </div>
 
         <div class="">
           <input
-            class="form-control"
+            class="form-control {{ getValidationClass('linkedin') }}"
             formControlName="linkedin"
             type="text"
             id="linkedin"
             placeholder="linkedin link"
           />
-          <small></small>
+          @for (error of getErrors('linkedin'); track error) {
+          <small class="py-1 text-danger">{{ error }}</small>
+          }
         </div>
-
       </form>
     </div>
   `,
-  styles: ``,
+  styles: `
+  .fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  `,
 })
 export class PortfolioComponent extends BaseFormComponent {
   protected override buildForm(): FormGroup {
@@ -52,7 +69,3 @@ export class PortfolioComponent extends BaseFormComponent {
     });
   }
 }
-
-  
-
-

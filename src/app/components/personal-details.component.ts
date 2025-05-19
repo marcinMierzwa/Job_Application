@@ -9,38 +9,68 @@ import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
   providers: [
     {
       provide: BaseFormComponent,
-      useExisting: forwardRef(() => PersonalDetailsComponent)
-    }
+      useExisting: forwardRef(() => PersonalDetailsComponent),
+    },
   ],
   template: `
-  <div class="p-3 ">
-    <h1 class="fs-4">Personal Details</h1>
-    <form class="d-flex flex-column gap-2" [formGroup]="form">
+    <div class="py-2">
+      <h1 class="fs-5 ">Personal Details</h1>
+      <form class="d-flex flex-column gap-2" [formGroup]="form">
+        <div class="">
+          <input
+            class="form-control {{ getValidationClass('firstName') }}"
+            formControlName="firstName"
+            type="text"
+            id="firstName"
+            placeholder="first name"
+          />
+          @for (error of getErrors('firstName'); track error) {
+          <small class="py-1 text-danger">{{ error }}</small>
+          }
+        </div>
 
-      <div class="">
-      <input class="form-control" formControlName="firstName" type="text" id="firstName" placeholder="first name"  />
-      <small></small>
-      </div>
+        <div class="">
+          <input
+            class="form-control {{ getValidationClass('lastName') }}"
+            formControlName="lastName"
+            type="text"
+            id="lastName"
+            placeholder="last name"
+          />
+          @for (error of getErrors('lastName'); track error) {
+          <small class="py-1 text-danger">{{ error }}</small>
+          }
+        </div>
 
-      <div class="">
-      <input class="form-control" formControlName="lastName" type="text" id="lastName" placeholder="last name"  />
-      <small></small>
-      </div>
-      
-      <div class="">
-      <input class="form-control" formControlName="email" type="email" id="email" placeholder="email"  />
-      <small></small>
-      </div>
+        <div class="">
+          <input
+            class="form-control {{ getValidationClass('email') }}"
+            formControlName="email"
+            type="email"
+            id="email"
+            placeholder="email"
+          />
+          @for (error of getErrors('email'); track error) {
+          <small class="py-1 text-danger">{{ error }}</small>
+          }
+        </div>
 
-      <div class="">
-      <input class="form-control" formControlName="phone" type="text" id="phone" placeholder="phone"  />
-      <small></small>
-      </div>
-
-    </form>
+        <div class="">
+          <input
+            class="form-control {{ getValidationClass('phone') }}"
+            formControlName="phone"
+            type="text"
+            id="phone"
+            placeholder="phone"
+          />
+          @for (error of getErrors('phone'); track error) {
+          <small class="py-1 text-danger">{{ error }}</small>
+          }
+        </div>
+      </form>
     </div>
   `,
-  styles: ``
+  styles: ``,
 })
 export class PersonalDetailsComponent extends BaseFormComponent {
   protected override buildForm(): FormGroup {
@@ -48,11 +78,7 @@ export class PersonalDetailsComponent extends BaseFormComponent {
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phone: ['', Validators.required]
-    })
+      phone: ['', Validators.required],
+    });
   }
-
-  
-
-
 }
