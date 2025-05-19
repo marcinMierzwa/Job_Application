@@ -60,16 +60,9 @@ export abstract class BaseFormComponent {
 
     return '';
   }
+
+  resetForm(): void {
+    this.form.reset();
+  }
 }
 
-// private readonly formStatusSignal = toSignal(
-//   this.form.statusChanges.pipe(distinctUntilChanged()),
-//   {
-//     initialValue: this.form.status,
-//   }
-// );
-//   readonly isValid: Signal<boolean> = computed(
-//     () => this.formStatusSignal() === 'VALID'
-//   );
-//   isValidEff = effect(() => console.log(this.isValid())
-//   )

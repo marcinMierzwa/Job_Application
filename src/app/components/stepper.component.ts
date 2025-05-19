@@ -103,6 +103,9 @@ export class StepperComponent implements AfterContentInit {
     });
     const mergedData = Object.assign({}, ...allData);
     this.alertService.displayAlert('form successfully sent');
-    console.log('form sent', mergedData);
+    console.log('form:', mergedData);
+    this.forms().forEach((form) => {
+      form.resetForm();
+    });
   }
 }
