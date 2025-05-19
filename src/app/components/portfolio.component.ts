@@ -13,8 +13,8 @@ import { BaseFormComponent } from './base-form.component';
     }
   ],
   template: `
-    <div class="p-3 ">
-      <h1 class="fs-4">Portfolio</h1>
+    <div class="fade-in mt-3">
+      <h1 class="fs-5">Portfolio</h1>
       <form class="d-flex flex-column gap-2" [formGroup]="form">
 
         <div class="">
@@ -42,7 +42,22 @@ import { BaseFormComponent } from './base-form.component';
       </form>
     </div>
   `,
-  styles: ``,
+  styles: `
+  .fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  `,
 })
 export class PortfolioComponent extends BaseFormComponent {
   protected override buildForm(): FormGroup {

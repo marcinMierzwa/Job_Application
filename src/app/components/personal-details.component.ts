@@ -13,12 +13,12 @@ import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
     }
   ],
   template: `
-  <div class="p-3 ">
-    <h1 class="fs-4">Personal Details</h1>
+  <div class="py-2">
+    <h1 class="fs-5 ">Personal Details</h1>
     <form class="d-flex flex-column gap-2" [formGroup]="form">
 
       <div class="">
-      <input class="form-control" formControlName="firstName" type="text" id="firstName" placeholder="first name"  />
+      <input class="form-control {{ getValidationClass('firstName') }}" formControlName="firstName" type="text" id="firstName" placeholder="first name"  />
       <small></small>
       </div>
 
@@ -29,7 +29,9 @@ import { FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
       
       <div class="">
       <input class="form-control" formControlName="email" type="email" id="email" placeholder="email"  />
-      <small></small>
+       @for (error of getErrors('email'); track error) {
+      <small class="py-1 text-danger">{{ error }}</small>
+       }
       </div>
 
       <div class="">

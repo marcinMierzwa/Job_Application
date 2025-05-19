@@ -18,24 +18,46 @@ export abstract class BaseFormComponent {
   readonly isValid = output<boolean>();
 
   ngAfterViewInit() {
-    this.form.statusChanges.subscribe((status: FormControlStatus) =>
-      this.isValid.emit(status === "VALID")
-    );
-  }
+  this.form.statusChanges
+    .pipe(distinctUntilChanged())
+    .subscribe((status: FormControlStatus) => {
+      this.isValid.emit(status === 'VALID');
+    });
 
 }
 
+getErrors(controlName: string): string[] {
+  const control = this.form.get(controlName);
+  if (control && control.invalid && (control.dirty || control.touched)) {
+    const messages: string[] = [];
+    const errors = control.errors;
 
-// private readonly formStatusSignal = toSignal(
-//   this.form.statusChanges.pipe(distinctUntilChanged()),
-//   {
-//     initialValue: this.form.status,
-//   }
-// );
-//   readonly isValid: Signal<boolean> = computed(
-//     () => this.formStatusSignal() === 'VALID'
-//   );
-//   isValidEff = effect(() => console.log(this.isValid())
-//   )
+    if (errors?.['required']) {
+      messages.push('This field is required.');
+    }
 
+    if (errors?.['email']) {
+      messages.push('Email must be an email.');
+    }
 
+    return messages;
+  }
+  return [];
+}
+
+getValidationClass(controlName: string): string {
+  const control = this.form.get(controlName);
+  if (!control) return '';
+
+  if (control.invalid && (control.dirty || control.touched)) {
+    return 'is-invalid';
+  }
+
+  if (control.valid && (control.dirty || control.touched)) {
+    return 'is-valid';
+  }
+
+  return '';
+}
+
+}

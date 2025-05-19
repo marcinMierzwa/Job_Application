@@ -21,7 +21,6 @@ import { BaseFormComponent } from './base-form.component';
 export class StepComponent {
   visible = input<boolean>(false);
   form: Signal<BaseFormComponent | undefined> = contentChild(BaseFormComponent);
-//   isValid = signal<boolean>(false);
 
   readonly isValidChange = output<boolean>();
 
@@ -29,7 +28,6 @@ export class StepComponent {
     const formInstance = this.form();
     if (formInstance) {
       formInstance.isValid.subscribe((valid) => {
-        // this.isValid.set(valid);
         this.isValidChange.emit(valid);
       });
     }
